@@ -14,19 +14,17 @@ const client = redis.createClient(REDIS_PORT);
 const attl = promisify(client.ttl).bind(client);
 const akeys = promisify(client.keys).bind(client);
 
-
 //routes
-app.get('/',async (req,res,next)=> {
+app.get('/', async (req,res,next)=> {
     try {
-        const { username } = req.params;
-        const title = "Node Redis Caching Example";
+        const title = "Node Redis Caching Example = Non Cached Page";
         let tmp = `<html><head><title>${title}</title>${css}</head><body><h1>${title}</h1><ul>`;
         const result = await fetch(`https://jsonplaceholder.typicode.com/users`);
         const data  = await result.json();
         data.map(d => { 
                 tmp += `<li><a href="/users/${d.username}"> ${d.username} </a></li> `;
             });
-        tmp += `</ul><a href="/users">cache</a></body></html>`;
+        tmp += `</ul><a href="/users">cached page</a></body></html>`;
         res.send(tmp);
     } catch (err) {
         console.log(err.message);
@@ -35,7 +33,7 @@ app.get('/',async (req,res,next)=> {
 
     app.get('/users' ,  async (req,res,next) => { 
         try {
-            const title = "Repo History (using Redis)";
+            const title = "Repo History - Cached Page";
             let tmp =  `<html><head><title>${title}</title>${css}<script>setInterval(()=>{window.location.href='/users';},1000)</script></head><body><h1>${title}</h1><ul>`;
             let keys = await akeys("*");
             for(let x = 0 ; x< keys.length ; x++) tmp += `<li>${keys[x]} - ${await attl(keys[x])} </li>`;
@@ -49,7 +47,7 @@ app.get('/',async (req,res,next)=> {
 
     app.get('/users/:username' ,async (req,res,next) => {
         try {
-            let title = "Repo History (using Redis)";
+            let title = "User Added - Non Cached Page ";
             let tmp = `<html><head><title>${title}</title>${css}</head><body><h1>${title}</h1><ul>`;
             let { username } = req.params;
             let website = (await(await fetch(`https://jsonplaceholder.typicode.com/users?username=${username}`)).json())[0].website;
