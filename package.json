@@ -1,0 +1,30 @@
+{
+  "name": "redis-node",
+  "version": "1.0.0",
+  "description": "A simple application that makes use of node in conjunction with redis as a caching solution ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metrophobe/redis-node.git"
+  },
+  "keywords": [
+    "redis",
+    "node",
+    "caching",
+    "cache"
+  ],
+  "author": "Metrophobe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/metrophobe/redis-node/issues"
+  },
+  "homepage": "https://github.com/metrophobe/redis-node#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "redis": "^3.0.2"
+  }
+}
